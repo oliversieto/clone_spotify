@@ -8,23 +8,33 @@ class CardTrackWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 200,
-      height: 250,
-      child: Column(
-        children: [
-          ClipRRect(
-            borderRadius: _getBorderRadius(),
-            child: Image.network(
-              track.urlImage,
-              fit: BoxFit.contain,
-              width: 200,
-              height: 200,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        width: 200,
+        height: 250,
+        child: Column(
+          crossAxisAlignment: track.isArtist
+              ? CrossAxisAlignment.center
+              : CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: _getBorderRadius(),
+              child: Image.network(
+                track.urlImage,
+                fit: BoxFit.contain,
+                width: 200,
+                height: 200,
+              ),
             ),
-          ),
-          Text(track.title),
-          Text(track.type.name),
-        ],
+            const SizedBox(height: 8.0),
+            Text(track.title),
+            Text(
+              track.type.name,
+              style: TextStyle(fontSize: 11.0, color: Colors.grey[400]),
+            ),
+          ],
+        ),
       ),
     );
   }

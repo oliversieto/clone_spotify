@@ -1,8 +1,12 @@
+import 'package:clone_spotify/models/track_model.dart';
+import 'package:clone_spotify/presenter/widgets/app_bar_widget.dart';
 import 'package:clone_spotify/presenter/widgets/card_track_widget.dart';
 import 'package:clone_spotify/services/track_service.dart';
 import 'package:clone_spotify/states/track_states.dart';
 import 'package:clone_spotify/stores/track_store.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/track_list_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -23,31 +27,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const AppBarWidget(),
       body: ListView(
+        padding: const EdgeInsets.all(16.0),
         children: [
-          SizedBox(
-            height: 300,
-            child: ValueListenableBuilder(
-              valueListenable: _store,
-              builder: (context, value, _) {
-                if (value is TrackStateError) {
-                  return Center(
-                    child: Text(value.errorMessage),
-                  );
-                }
-                if (value is TrackStateSuccess) {
-                  return ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: value.trackList.length,
-                    itemBuilder: (context, index) =>
-                        CardTrackWidget(track: value.trackList[index]),
-                  );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
+          ValueListenableBuilder(
+            valueListenable: _store,
+            builder: (context, value, _) {
+              if (value is TrackStateError) {
+                return Center(
+                  child: Text(value.errorMessage),
                 );
-              },
-            ),
+              }
+              if (value is TrackStateSuccess) {
+                return TrackListWidget(
+                  title: 'Jump back in',
+                  trackList: value.trackList,
+                );
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           ),
         ],
       ),
