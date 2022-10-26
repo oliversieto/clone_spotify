@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:clone_spotify/presenter/home_page.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scrollBehavior: ScrollConfiguration.of(context).copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+        },
+        scrollbars: false,
+      ),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,

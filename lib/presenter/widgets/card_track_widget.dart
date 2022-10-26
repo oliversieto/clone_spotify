@@ -18,13 +18,20 @@ class CardTrackWidget extends StatelessWidget {
               ? CrossAxisAlignment.center
               : CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: _getBorderRadius(),
-              child: Image.network(
-                track.urlImage,
-                fit: BoxFit.contain,
-                width: 200,
-                height: 200,
+            InkWell(
+              onTap: () {},
+              child: ClipRRect(
+                borderRadius: _getBorderRadius(),
+                child: Ink(
+                  width: 200,
+                  height: 200,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(track.urlImage),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 8.0),
